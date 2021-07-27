@@ -13,6 +13,7 @@ public class StateTests {
     private final Party john = new TestIdentity(new CordaX500Name("John", "", "GB")).getParty();
     private final Party boom = new TestIdentity(new CordaX500Name("Boom", "Bangkok", "TH")).getParty();
     private final Party bob = new TestIdentity(new CordaX500Name("Bob", "", "GB")).getParty();
+    private final Party nai = new TestIdentity(new CordaX500Name("nai", "", "TH")).getParty();
     //private final Party nut = new TestIdentity(new CordaX500Name("Nut", "Bangkok", "TH")).getParty();
     private final Party ern = new TestIdentity(new CordaX500Name("Ern", "Bangkok", "TH")).getParty();
 
