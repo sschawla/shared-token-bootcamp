@@ -9,7 +9,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class StateTests {
-    private final Party alice = new TestIdentity(new CordaX500Name("Alice", "", "GB")).getParty();
+    private final Party jane = new TestIdentity(new CordaX500Name("Jane", "", "GB")).getParty();
     private final Party bob = new TestIdentity(new CordaX500Name("Bob", "", "GB")).getParty();
 
 //    @Test
