@@ -27,6 +27,10 @@ public class TokenState implements ContractState {
 
     }
 
+    public TokenState changeAmount(int amount){
+        return new TokenState(this.issuer, this.owner, amount);
+    }
+
     @NotNull
     @Override
 
