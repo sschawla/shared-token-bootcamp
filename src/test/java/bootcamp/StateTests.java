@@ -14,7 +14,7 @@ public class StateTests {
     private final Party boom = new TestIdentity(new CordaX500Name("Boom", "Bangkok", "TH")).getParty();
     private final Party bob = new TestIdentity(new CordaX500Name("Bob", "", "GB")).getParty();
     private final Party ern = new TestIdentity(new CordaX500Name("Ern", "Bangkok", "TH")).getParty();
-
+    private final Party ice = new TestIdentity(new CordaX500Name("Ice", "Bangkok", "TH")).getParty();
 //    @Test
 //    public void tokenStateHasIssuerOwnerAndAmountParamsOfCorrectTypeInConstructor() {
 //        new TokenState(alice, bob, 1);
