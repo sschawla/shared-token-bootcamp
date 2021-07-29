@@ -12,17 +12,30 @@ import java.util.List;
 
 /* Our state, defining a shared fact on the ledger.
  * See src/main/java/examples/ArtState.java for an example. */
-//@BelongsToContract(TokenContract.class)
-public class TokenState implements ContractState{
+@BelongsToContract(TokenContract.class)
+public class TokenState implements ContractState {
     private final Party issuer;
     private final Party owner;
     private final int amount;
+
 
     // The constructor used to create an instance of the state.
     public TokenState(Party issuer, Party owner, int amount) {
         this.issuer = issuer;
         this.owner = owner;
         this.amount = amount;
+
+    }
+
+    public TokenState changeAmount(int amount){
+        return new TokenState(this.issuer, this.owner, amount);
+    }
+
+    @NotNull
+    @Override
+
+    public List<AbstractParty> getParticipants(){
+        return ImmutableList.of(issuer, owner);
     }
 
     public Party getIssuer() {
@@ -36,12 +49,4 @@ public class TokenState implements ContractState{
     public int getAmount() {
         return amount;
     }
-
-
-    @NotNull
-    @Override
-    public List<AbstractParty> getParticipants() {
-        return ImmutableList.of(issuer, owner);
-    }
-
 }

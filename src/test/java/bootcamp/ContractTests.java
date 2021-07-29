@@ -17,52 +17,51 @@ public class ContractTests {
     private final TestIdentity bob = new TestIdentity(new CordaX500Name("Bob", "", "GB"));
     private MockServices ledgerServices = new MockServices(new TestIdentity(new CordaX500Name("TestId", "", "GB")));
 
-//    private TokenState tokenState = new TokenState(alice.getParty(), bob.getParty(), 1);
+    private TokenState tokenState = new TokenState(alice.getParty(), bob.getParty(), 1);
 //
-//    @Test
-//    public void tokenContractImplementsContract() {
-//        assert(new TokenContract() instanceof Contract);
-//    }
-//
-//    @Test
-//    public void tokenContractRequiresZeroInputsInTheTransaction() {
-//        transaction(ledgerServices, tx -> {
-//            // Has an input, will fail.
-//            tx.input(TokenContract.ID, tokenState);
-//            tx.output(TokenContract.ID, tokenState);
-//            tx.command(Arrays.asList(alice.getPublicKey(), bob.getPublicKey()), new TokenContract.Commands.Issue());
-//            tx.fails();
-//            return null;
-//        });
-//
-//        transaction(ledgerServices, tx -> {
-//            // Has no input, will verify.
-//            tx.output(TokenContract.ID, tokenState);
-//            tx.command(Arrays.asList(alice.getPublicKey(), bob.getPublicKey()), new TokenContract.Commands.Issue());
-//            tx.verifies();
-//            return null;
-//        });
-//    }
-//
-//    @Test
-//    public void tokenContractRequiresOneOutputInTheTransaction() {
-//        transaction(ledgerServices, tx -> {
-//            // Has two outputs, will fail.
-//            tx.output(TokenContract.ID, tokenState);
-//            tx.output(TokenContract.ID, tokenState);
-//            tx.command(Arrays.asList(alice.getPublicKey(), bob.getPublicKey()), new TokenContract.Commands.Issue());
-//            tx.fails();
-//            return null;
-//        });
-//
-//        transaction(ledgerServices, tx -> {
-//            // Has one output, will verify.
-//            tx.output(TokenContract.ID, tokenState);
-//            tx.command(Arrays.asList(alice.getPublicKey(), bob.getPublicKey()), new TokenContract.Commands.Issue());
-//            tx.verifies();
-//            return null;
-//        });
-//    }
+    @Test
+    public void tokenContractImplementsContract() {
+        assert(new TokenContract() instanceof Contract);
+    }
+
+    @Test
+    public void tokenContractRequiresZeroInputsInTheTransaction() {
+        transaction(ledgerServices, tx -> {
+            // Has an input, will fail.
+            tx.input(TokenContract.ID, tokenState);
+            tx.output(TokenContract.ID, tokenState);
+            tx.command(Arrays.asList(alice.getPublicKey(), bob.getPublicKey()), new TokenContract.Commands.Issue());
+            tx.fails();
+            return null;
+        });
+        transaction(ledgerServices, tx -> {
+            // Has no input, will verify.
+            tx.output(TokenContract.ID, tokenState);
+            tx.command(Arrays.asList(alice.getPublicKey(), bob.getPublicKey()), new TokenContract.Commands.Issue());
+            tx.verifies();
+            return null;
+        });
+    }
+
+    @Test
+    public void tokenContractRequiresOneOutputInTheTransaction() {
+        transaction(ledgerServices, tx -> {
+            // Has two outputs, will fail.
+            tx.output(TokenContract.ID, tokenState);
+            tx.output(TokenContract.ID, tokenState);
+            tx.command(Arrays.asList(alice.getPublicKey(), bob.getPublicKey()), new TokenContract.Commands.Issue());
+            tx.fails();
+            return null;
+        });
+
+        transaction(ledgerServices, tx -> {
+            // Has one output, will verify.
+            tx.output(TokenContract.ID, tokenState);
+            tx.command(Arrays.asList(alice.getPublicKey(), bob.getPublicKey()), new TokenContract.Commands.Issue());
+            tx.verifies();
+            return null;
+        });
+    }
 //
 //    @Test
 //    public void tokenContractRequiresOneCommandInTheTransaction() {
@@ -198,3 +197,4 @@ public class ContractTests {
 //        });
 //    }
 }
+
