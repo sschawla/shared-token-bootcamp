@@ -1,5 +1,6 @@
 package bootcamp;
 
+import com.google.common.collect.ImmutableList;
 import net.corda.core.contracts.BelongsToContract;
 import net.corda.core.contracts.ContractState;
 import net.corda.core.identity.AbstractParty;
@@ -13,5 +14,14 @@ import java.util.List;
  * See src/main/java/examples/ArtState.java for an example. */
 //@BelongsToContract(TokenContract.class)
 public class TokenState {
+    private final Party issuer;
+    private final Party owner;
+    private final int amount;
 
+    // The constructor used to create an instance of the state.
+    public TokenState(Party issuer, Party owner, int amount) {
+        this.issuer = issuer;
+        this.owner = owner;
+        this.amount = amount;
+    }
 }

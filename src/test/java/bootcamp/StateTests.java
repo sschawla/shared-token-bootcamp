@@ -17,13 +17,13 @@ public class StateTests {
     private final Party nai = new TestIdentity(new CordaX500Name("Nai", "Bangkok", "TH")).getParty();
     private final Party theerat = new TestIdentity(new CordaX500Name("Theerat", "Bangkok", "TH")).getParty();
     private final Party nut = new TestIdentity(new CordaX500Name("Nut", "Bangkok", "TH")).getParty();
-
     private final Party ice = new TestIdentity(new CordaX500Name("Ice", "Bangkok", "TH")).getParty();
-//    @Test
-//    public void tokenStateHasIssuerOwnerAndAmountParamsOfCorrectTypeInConstructor() {
-//        new TokenState(alice, bob, 1);
-//    }
-//
+
+    @Test
+    public void tokenStateHasIssuerOwnerAndAmountParamsOfCorrectTypeInConstructor() {
+        new TokenState(boom, bob, 1);
+    }
+
 //    @Test
 //    public void tokenStateHasGettersForIssuerOwnerAndAmount() {
 //        TokenState tokenState = new TokenState(alice, bob, 1);
@@ -44,4 +44,10 @@ public class StateTests {
 //        assertTrue(tokenState.getParticipants().contains(alice));
 //        assertTrue(tokenState.getParticipants().contains(bob));
 //    }
+
+    @Test
+    public void tokenStateHasTwoParticipantsAndAmount10() {
+
+    }
+
 }
