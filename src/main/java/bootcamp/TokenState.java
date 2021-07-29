@@ -12,7 +12,7 @@ import java.util.List;
 
 /* Our state, defining a shared fact on the ledger.
  * See src/main/java/examples/ArtState.java for an example. */
-//@BelongsToContract(TokenContract.class)
+@BelongsToContract(TokenContract.class)
 public class TokenState implements ContractState {
     private final Party issuer;
     private final Party owner;
