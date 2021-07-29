@@ -1,6 +1,7 @@
 package bootcamp;
 
 import examples.ArtContract;
+import examples.ArtState;
 import net.corda.core.contracts.CommandData;
 import net.corda.core.contracts.CommandWithParties;
 import net.corda.core.contracts.Contract;
@@ -23,13 +24,16 @@ public class TokenContract implements Contract {
     }
 
         public void verify(LedgerTransaction tx) throws IllegalArgumentException {
-            CommandWithParties<TokenContract.Commands> command = requireSingleCommand(tx.getCommands(), Commands.class);
+            CommandWithParties<Commands> command = requireSingleCommand(tx.getCommands(), Commands.class);
 
-            if (command.getValue() instanceof ArtContract.Commands.Issue) {
+            if (command.getValue() instanceof TokenContract.Commands.Issue) {
+                 final TokenState outputTokenState =  tx.outputsOfType(TokenState.class).get(0);
 
                 requireThat (require -> {
                     require.using("No inputs should be consumed when issuing Token State.",tx.getInputStates().size()==0);
-                    require.using("Only one outputs state is allowed.",tx.getOutputs().size()==1);
+                    require.using("Only one outputs state is allowed.",tx.getOutputStates().size()==1);
+                    require.using("Wrong Output Type", outputTokenState instanceof TokenState);
+//                    require.using("Correct Output Type", tx.outputsOfType(TokenState.class).size()==0);
 //              return everything follow method because public void
                     return  null;
                 });
