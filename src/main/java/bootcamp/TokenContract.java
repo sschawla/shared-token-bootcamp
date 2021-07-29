@@ -22,20 +22,25 @@ public class TokenContract implements Contract {
     public static String ID = "bootcamp.TokenContract";
 
 
-        public void verify(LedgerTransaction tx) throws IllegalArgumentException {
+        public void verify(LedgerTransaction tx) throws IllegalArgumentException { //verify transaction just how contract works
             CommandWithParties<Commands> command = requireSingleCommand(tx.getCommands(), Commands.class);
 
-            if (command.getValue() instanceof Commands.Issue) {
+            if (command.getValue() instanceof Commands.Issue) { //checking condition #1
+                TokenState instaState = (TokenState)tx.getOutputStates().get(0);
                 // Issue transaction rules...
                 requireThat(req -> {
-                    req.using("No inputs should be consumed when issuing Token State.", tx.getInputStates().size() == 0);
-                    req.using("Only one output state is allowed.", tx.getOutputs().size() == 1);
+                    req.using("No inputs should be consumed when issuing Token State.", tx.getInputStates().size() == 0); //size checking for input state
+                    req.using("Only one output state is allowed.", tx.getOutputStates().size() == 1); //size checking for output state
+                    req.using("Not a token state", tx.getOutputStates().get(0) instanceof TokenState);
+                    req.using("Transaction output is not a positive amount", instaState.getAmount() > 0);
+                    req.using("Transaction output is not a positive amount", (command.getSigners().contains(instaState.getIssuer().getOwningKey())));
+
                     return null;
+
                 });
 
 
-            }else if (command.getValue() instanceof Commands.Settle){
-                ///sadsadsadsad
+            }else if (command.getValue() instanceof Commands.Settle){ //not required according to the test form
 
             }else{
 
