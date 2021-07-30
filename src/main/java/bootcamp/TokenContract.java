@@ -33,7 +33,11 @@ public class TokenContract implements Contract {
                     require.using("No inputs should be consumed when issuing Token State.",tx.getInputStates().size()==0);
                     require.using("Only one outputs state is allowed.",tx.getOutputStates().size()==1);
                     require.using("Wrong Output Type", outputTokenState instanceof TokenState);
-//                    require.using("Correct Output Type", tx.outputsOfType(TokenState.class).size()==0);
+                    require.using("Output Negative or Zero", outputTokenState.getAmount() > 0);
+                    require.using("No Issuer Signer",command.getSigners().contains(outputTokenState.getIssuer().getOwningKey()));
+
+
+
 //              return everything follow method because public void
                     return  null;
                 });
