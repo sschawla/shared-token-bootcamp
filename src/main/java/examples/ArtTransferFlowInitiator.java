@@ -32,7 +32,7 @@ public class ArtTransferFlowInitiator extends FlowLogic<Void> {
         this.artist = artist;
         this.newOwner = newOwner;
     }
-
+// progressTracker 
     private final ProgressTracker progressTracker = new ProgressTracker();
 
     @Override
