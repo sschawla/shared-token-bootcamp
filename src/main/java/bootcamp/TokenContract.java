@@ -34,7 +34,7 @@ public class TokenContract implements Contract {
                     require.using("Only one outputs state is allowed.",tx.getOutputStates().size()==1);
                     require.using("Wrong Output Type", outputTokenState instanceof TokenState);
                     require.using("Output Negative or Zero", outputTokenState.getAmount() > 0);
-                    require.using("No Issuer Signer",command.getSigners().contains(outputTokenState.getIssuer().getOwningKey()));
+                    require.using("Required signer is not an issuer",command.getSigners().contains(outputTokenState.getIssuer().getOwningKey()));
 
 
 
