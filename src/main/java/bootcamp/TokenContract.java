@@ -26,10 +26,15 @@ public class TokenContract implements Contract {
             CommandWithParties<Commands> command = requireSingleCommand(tx.getCommands(), Commands.class);
 
             if (command.getValue() instanceof Commands.Issue) {
+
+                final TokenState outputTokenState = tx.outputsOfType(TokenState.class).get(0);
                 // Issue transaction rules...
                 requireThat(req -> {
                     req.using("No inputs should be consumed when issuing Token State.", tx.getInputStates().size() == 0);
                     req.using("Only one output state is allowed.", tx.getOutputs().size() == 1);
+                    req.using("Wrong input",outputTokenState instanceof TokenState);
+                    req.using("Output Negative/Zero",outputTokenState.getAmount() > 0);
+                    req.using("Required signer is not an issuer",command.getSigners().contains(outputTokenState.getIssuer().getOwningKey()));
                     return null;
                 });
 
