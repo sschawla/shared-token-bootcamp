@@ -41,7 +41,7 @@ public class FlowTests {
 
     @Test
     public void transactionConstructedByFlowUsesTheCorrectNotary() throws Exception {
-        TokenIssueFlowInitiator flow = new TokenIssueFlowInitiator(nodeB.getInfo().getLegalIdentities().get(0), 99);
+        TokenIssueFlowInitiator flow = new TokenIssueFlowInitiator(nodeB.getInfo().getLegalIdentities().get(0), 99); //owner and amount
         CordaFuture<SignedTransaction> future = nodeA.startFlow(flow);
         network.runNetwork();
         SignedTransaction signedTransaction = future.get();
@@ -52,32 +52,32 @@ public class FlowTests {
         assertEquals(network.getNotaryNodes().get(0).getInfo().getLegalIdentities().get(0), output.getNotary());
     }
 
-//    @Test
-//    public void transactionConstructedByFlowHasOneTokenStateOutputWithTheCorrectAmountAndOwner() throws Exception {
-//        TokenIssueFlowInitiator flow = new TokenIssueFlowInitiator(nodeB.getInfo().getLegalIdentities().get(0), 99);
-//        CordaFuture<SignedTransaction> future = nodeA.startFlow(flow);
-//        network.runNetwork();
-//        SignedTransaction signedTransaction = future.get();
-//
-//        assertEquals(1, signedTransaction.getTx().getOutputStates().size());
-//        TokenState output = signedTransaction.getTx().outputsOfType(TokenState.class).get(0);
-//
-//        assertEquals(nodeB.getInfo().getLegalIdentities().get(0), output.getOwner());
-//        assertEquals(99, output.getAmount());
-//    }
-//
-//    @Test
-//    public void transactionConstructedByFlowHasOneOutputUsingTheCorrectContract() throws Exception {
-//        TokenIssueFlowInitiator flow = new TokenIssueFlowInitiator(nodeB.getInfo().getLegalIdentities().get(0), 99);
-//        CordaFuture<SignedTransaction> future = nodeA.startFlow(flow);
-//        network.runNetwork();
-//        SignedTransaction signedTransaction = future.get();
-//
-//        assertEquals(1, signedTransaction.getTx().getOutputStates().size());
-//        TransactionState output = signedTransaction.getTx().getOutputs().get(0);
-//
-//        assertEquals("bootcamp.TokenContract", output.getContract());
-//    }
+    @Test
+    public void transactionConstructedByFlowHasOneTokenStateOutputWithTheCorrectAmountAndOwner() throws Exception {
+        TokenIssueFlowInitiator flow = new TokenIssueFlowInitiator(nodeB.getInfo().getLegalIdentities().get(0), 99); //owner and amount
+        CordaFuture<SignedTransaction> future = nodeA.startFlow(flow);
+        network.runNetwork();
+        SignedTransaction signedTransaction = future.get();
+
+        assertEquals(1, signedTransaction.getTx().getOutputStates().size());
+        TokenState output = signedTransaction.getTx().outputsOfType(TokenState.class).get(0); //output is instantiated as a TokenState and assigned to be the outputs of type
+
+        assertEquals(nodeB.getInfo().getLegalIdentities().get(0), output.getOwner()); //comparing what was passed into the flow initiator to the output state owner
+        assertEquals(99, output.getAmount());
+    }
+
+    @Test
+    public void transactionConstructedByFlowHasOneOutputUsingTheCorrectContract() throws Exception {
+        TokenIssueFlowInitiator flow = new TokenIssueFlowInitiator(nodeB.getInfo().getLegalIdentities().get(0), 99);
+        CordaFuture<SignedTransaction> future = nodeA.startFlow(flow);
+        network.runNetwork();
+        SignedTransaction signedTransaction = future.get();
+
+        assertEquals(1, signedTransaction.getTx().getOutputStates().size());
+        TransactionState output = signedTransaction.getTx().getOutputs().get(0);
+
+        assertEquals("bootcamp.TokenContract", output.getContract());
+    }
 //
 //    @Test
 //    public void transactionConstructedByFlowHasOneIssueCommand() throws Exception {

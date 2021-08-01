@@ -2,7 +2,6 @@ package bootcamp;
 
 import co.paralleluniverse.fibers.Suspendable;
 import com.google.common.collect.ImmutableList;
-import examples.ArtContract;
 import net.corda.core.flows.*;
 import net.corda.core.identity.Party;
 import net.corda.core.transactions.SignedTransaction;
@@ -45,7 +44,7 @@ public class TokenIssueFlowInitiator extends FlowLogic<SignedTransaction> {
          *         TODO 1 - Create our TokenState to represent on-ledger tokens!
          * ===========================================================================*/
         // We create our new TokenState.
-        TokenState tokenState = new TokenState(issuer,owner,amount);
+        TokenState tokenState = new TokenState(issuer, owner, amount);
 
 
         /* ============================================================================
@@ -53,12 +52,11 @@ public class TokenIssueFlowInitiator extends FlowLogic<SignedTransaction> {
          * ===========================================================================*/
         // We build our transaction.
         TransactionBuilder txBuilder = new TransactionBuilder(notary);
-        txBuilder.addOutputState(tokenState);
+        txBuilder.addOutputState(tokenState); //tokenState is the output state (instance of TokenState)
 
 
-        TokenContract.Commands.Issue commandData = new TokenContract.Commands.Issue();
-        List<PublicKey> requiredSigners = ImmutableList.of( tokenState.getIssuer().getOwningKey() ,
-                tokenState.getOwner().getOwningKey());
+        TokenContract.Commands.Issue commandData = new TokenContract.Commands.Issue(); //instantiating an issue command called commandData
+        List<PublicKey> requiredSigners = ImmutableList.of(issuer.getOwningKey(), owner.getOwningKey());
         txBuilder.addCommand(commandData,requiredSigners);
 
 
