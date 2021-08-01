@@ -28,20 +28,15 @@ public class TokenContract implements Contract {
             if (command.getValue() instanceof Commands.Issue) { //checking condition #1
 //                TokenState instaState = (TokenState)tx.getOutputStates().get(0);
 
-                final TokenState outputTokenState = tx.outputsOfType(TokenState.class).get(0);
+
                 // Issue transaction rules...
                 requireThat(req -> {
                     req.using("No inputs should be consumed when issuing Token State.", tx.getInputStates().size() == 0); //size checking for input state
                     req.using("Only one output state is allowed.", tx.getOutputStates().size() == 1); //size checking for output state
-                    req.using("Not a token state", tx.getOutputStates().get(0) instanceof TokenState);
+                    req.using("Not a token state", tx.getOutputStates().get(0) instanceof TokenState); //will be redundant if outputTokenState is used here
 
-                    TokenState instaState = (TokenState)tx.getOutputStates().get(0);
-                    //final TokenState outputTokenState =  tx.outputsOfType(TokenState.class).get(0);
+                    final TokenState outputTokenState = tx.outputsOfType(TokenState.class).get(0);
 
-                    req.using("Transaction output is not a positive amount", instaState.getAmount() > 0);
-                    req.using("Required signer is not an issuer", (command.getSigners().contains(instaState.getIssuer().getOwningKey()))); //compare the state input with the command input
-
-                    req.using("Wrong input",outputTokenState instanceof TokenState);
                     req.using("Output Negative/Zero",outputTokenState.getAmount() > 0);
                     req.using("Required signer is not an issuer",command.getSigners().contains(outputTokenState.getIssuer().getOwningKey()));
                     return null;

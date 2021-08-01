@@ -20,7 +20,7 @@ public class TokenIssueFlowInitiator extends FlowLogic<SignedTransaction> {
     private final Party owner;
     private final int amount;
 
-    public TokenIssueFlowInitiator(Party owner, int amount) {
+    public TokenIssueFlowInitiator(Party owner, int amount) { //Q2
         this.owner = owner;
         this.amount = amount;
     }
@@ -51,20 +51,22 @@ public class TokenIssueFlowInitiator extends FlowLogic<SignedTransaction> {
          *      TODO 3 - Build our token issuance transaction to update the ledger!
          * ===========================================================================*/
         // We build our transaction.
-        TransactionBuilder txBuilder = new TransactionBuilder(notary);
-        txBuilder.addOutputState(tokenState); //tokenState is the output state (instance of TokenState)
+        TransactionBuilder txBuilder = new TransactionBuilder(notary); //Q1
+        txBuilder.addOutputState(tokenState); //tokenState is added to transaction builder as the outputstate
+        //in this case theres no input
 
-
-        TokenContract.Commands.Issue commandData = new TokenContract.Commands.Issue(); //instantiating an issue command called commandData
-        List<PublicKey> requiredSigners = ImmutableList.of(issuer.getOwningKey(), owner.getOwningKey());
-        txBuilder.addCommand(commandData,requiredSigners);
-
+        TokenContract.Commands.Issue commandData = new TokenContract.Commands.Issue(); //instantiating an issue command called commandData //Q4
+        List<PublicKey> requiredSigners = ImmutableList.of(issuer.getOwningKey(), owner.getOwningKey()); //make a list of type "publickey" called requiredsigners //Q5
+        //to declare required signers being both the issuer and signers and the list is immutable
+        txBuilder.addCommand(commandData,requiredSigners);//adding command to the transaction builder where the inputs are data and keys required
+        //this line also make Q3 pass because it assigns issue command that belongs to TokenContract to txbuilder
 
         /* ============================================================================
          *          TODO 2 - Write our TokenContract to control token issuance!
          * ===========================================================================*/
         // We check our transaction is valid based on its contracts.
-        txBuilder.verify(getServiceHub());
+        txBuilder.verify(getServiceHub()); //this verify() goes into the tokencontract class input is of type "ledgertransaction" being the "tx" in the method
+        //getServiceHub becomes tx inside the verify method
 
         FlowSession session = initiateFlow(owner);
 
